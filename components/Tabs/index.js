@@ -20,14 +20,6 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
         console.log('error found: ', error);
     });
 
-topics.forEach(topic => {
-    axios.get('https://lambda-times-backend.herokuapp.com/topics')
-        .then(res => {
-            const topics = createTab(res.data);
-            tabs.append(topics);
-        });
-});
-
 function createTab(tabTopic) {
     const topics = document.createElement('div');
     topics.classList.add('topics');
@@ -36,7 +28,25 @@ function createTab(tabTopic) {
     title.classList.add('title');
     title.textContent = tabTopic.title;
 
+    const tab = document.createElement('div');
+    tab.classList.add('tab');
+    tab.textContent = tabTopic.tab;
+
+    const activeTab = document.createElement('div');
+    activeTab.classList.add('active-tab');
+    activeTab.textContent = tabTopic.activeTab;
+
     topics.append(title);
+    topics.append(tab);
+    topics.append(activeTab);
 
     return topics;
 }
+
+topics.forEach(topic => {
+    axios.get('https://lambda-times-backend.herokuapp.com/topics')
+        .then(res => {
+            const topics = createTab(res.data);
+            tabs.append(topics);
+        });
+});
