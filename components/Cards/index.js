@@ -18,10 +18,13 @@ axios.get = ('https://lambda-times-backend.herokuapp.com/articles')
     });
 
 // Create a card for each of the articles and add the card to the DOM.
-axios.get(`https://lambda-times-backend.herokuapp.com/articles${author}`)
+axios.get(`https://lambda-times-backend.herokuapp.com/articles/${authorName}`)
     .then(res => {
         const card = createCard(res.data);
         cardsContainer.append(card);
+    })
+    .catch(error => {
+        console.log('error found: ', error);
     });
 
 // Create a function that will programmatically create the following DOM component:
@@ -35,6 +38,9 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles${author}`)
 //   </div>
 // </div>
 function createCard(cardInfo) {
+    // const articles = document.createElement('div');
+    // articles.classList.add('articles');
+
     const card = document.createElement('div');
     card.classList.add('card');
 
@@ -46,20 +52,20 @@ function createCard(cardInfo) {
     author.classList.add('author');
     author.textContent = `Author: ${cardInfo.author || "unknown"}`
 
-    const img = document.createElement('img');
-    img.src = author.img_url;
+    const authorPhoto = document.createElement('img');
+    authorPhoto.src = author.authorPhoto_url;
 
-    const name = document.createElement('div');
-    name.textContent = author.name;
+    const authorName = document.createElement('div');
+    authorName.textContent = author.authorName;
 
     const span = document.createElement('span');
-    span.textContent = `By: ${name}`;
+    span.textContent = `By: ${authorName}`;
 
     card.append(headline);
     card.append(author);
     author.append(
-        img,
-        name,
+        authorPhoto,
+        authorName,
         span,
     );
 
