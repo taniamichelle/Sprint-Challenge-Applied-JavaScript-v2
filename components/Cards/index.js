@@ -52,8 +52,11 @@ function createCard(cardInfo) {
     author.classList.add('author');
     author.textContent = `Author: ${cardInfo.author || "unknown"}`
 
+    const imgContainer = document.createElement('div');
+    imgContainer.classList.add('img-container');
+
     const authorPhoto = document.createElement('img');
-    authorPhoto.src = author.authorPhoto_url;
+    authorPhoto.src = imgContainer.authorPhoto_url;
 
     const authorName = document.createElement('div');
     authorName.textContent = author.authorName;
@@ -64,10 +67,11 @@ function createCard(cardInfo) {
     card.append(headline);
     card.append(author);
     author.append(
-        authorPhoto,
+        imgContainer,
         authorName,
         span,
     );
+    imgContainer.append(authorPhoto);
 
     return card;
 }
